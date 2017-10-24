@@ -5,9 +5,11 @@ import re
 import settings
 import SQLiteHelper
 import jsonpickle
+from flask import Flask, request
+import os
 
+server = Flask(__name__)
 bot = telebot.TeleBot(settings.API_TOKEN)
-bot.remove_webhook()
 
 def validate_text(text):
     if re.match("[А-Яа-яӘІҢҒҮҰҚӨҺәіңғүұқөһ]+", text) is None:
@@ -78,5 +80,17 @@ def send_ans_default(message):
     db.close()
     print(message.from_user.first_name, message.from_user.username, message.text)
      
-if __name__ == '__main__':
-    bot.polling(none_stop=True)    
+
+@server.route('/' + settings.API_TOKEN, methods=['POST'])
+def get_message():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "POST", 200
+
+
+@server.route("/")
+def web_hook():
+    bot.remove_webhook()
+    bot.set_webhook(url='https://kaz2latbot.herokuapp.com/' + settings.API_TOKEN)
+    return "CONNECTED", 200
+
+server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))   
