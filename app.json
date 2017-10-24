@@ -1,0 +1,14 @@
+{
+  "name": "Kaz2LatinBot",
+  "description": "A simple Telegram bot to transliterate text from kazakh cyrillic to kazakh latin",
+  "image": "heroku/python",
+  "repository": "https://github.com/armandyne/Kaz2LatinBot",
+  "keywords": ["telegram", "bot", "kazakhlatin" ],
+  "addons": [],
+  "environments": {
+    "TG_BOT_TOKEN": {
+      "description": "Telegram API bot token",
+      "value": "123456789:AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLL"
+    }
+  }
+}
