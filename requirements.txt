@@ -1,4 +1,0 @@
-jsonpickle
-pyTelegramBotAPI
-requests
-Flask
